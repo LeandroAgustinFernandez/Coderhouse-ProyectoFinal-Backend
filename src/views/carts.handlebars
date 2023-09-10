@@ -1,0 +1,39 @@
+<section class="cart_container">
+  <h2 id="cart" data-id="{{_id}}" class="my-2">Cart</h2>
+  {{#if display}}
+    <article class="container border rounded p-2" id="exist-products">
+      <table class="table table-striped">
+        <thead class="rounded">
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="rounded" id="products">
+          {{#each products}} 
+          <tr>
+            <td><strong>{{this.product.title}}</strong></td>
+            <td><strong>$ {{this.product.price}}</strong></td>
+            <td class="text-center"><strong>{{this.quantity}}</strong></td>
+            <td class="text-center"><button class="btn btn-outline-danger" data-id="{{this.product._id}}">Delete</button></td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+      <div class="d-flex justify-content-end">
+        <a class="btn btn-outline-dark" id="close-cart">Close cart</a>
+      </div>
+    </article>
+    <div id="no-exist-products" style="display: none;">
+      <h3>No hay productos en el carrito.</h3>
+    </div>
+  {{else}}
+    <div>
+      <h3>Aun no hay productos en el carrito.</h3>
+    </div>
+  {{/if}}
+</section>
+
+<script src="/js/cart.js"></script>

@@ -1,0 +1,20 @@
+<section class="container mt-2">
+  <article class="text-center">
+    <h2>Purchase</h2>
+    
+    {{#if ticket_error}}
+      <div>
+        <h4>The purchase doesn't exist.</h4>
+      </div>
+    {{else}}
+      <div>
+        <h4>The purchase was completed successfully.</h4>
+        <div class="border rounded">
+            <p>Code: {{ticket.code}}</p>
+            <p>Amount: ${{ticket.amount}}</p>
+            <p>Date: {{ticket.purchase_datetime}}</p>
+        </div>
+      </div>
+    {{/if}}
+  </article>
+</section>

@@ -1,0 +1,86 @@
+<section class="products">
+  <h1>Products</h1>
+  {{#if error}}
+  <p class="message">La pagina solicitada no existe.</p>
+  <a href="/products" class="btn-primary">Regresar</a>
+  {{else}}
+  <section class="products">
+    <article>
+      <div style="color: #333; text-align: center;">
+        <p class="cart-id" hidden>{{cart._id}}</p>
+      </div>
+      <form class="row row-cols-lg-auto g-3 align-items-center mb-2" action="/products" method="get" >
+        <div class="col-12">
+          <select class="form-select" name="query" id="query">
+            <option value="">Select a Category</option>
+            <option value="remeras">Remeras</option>
+            <option value="calzado">Calzados</option>
+            <option value="pantalones">Pantalones</option>
+            <option value="mochilas">Mochilas</option>
+          </select>
+        </div>
+
+        <div class="col-12">
+          <select class="form-select"name="sort" id="sort">
+            <option value="">Sort by price</option>
+            <option value="asc">Ascendente</option>
+            <option value="desc">Descendente</option>
+          </select>
+        </div>       
+
+        <div class="col-12">
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+      </form>
+    </article>
+    <article class="products_list">
+      {{#each products}}
+      <div class="card shadow-lg" style="width: 18rem;">
+        <img src="/images/products/{{this.thumbnails.[0]}}" alt="{{this.title}}" class="card-img-top">
+        <div class="card-body d-flex flex-column justify-content-between">
+          <h5 class="card-title"> {{this.title}}</h5>
+          <p class="card-text">$ {{this.price}}</p>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <a class="btn btn-primary me-md-2"  href="/product/{{this._id}}" type="button">Detail</a>
+            <button class="btn btn-primary addtocart" data-id="{{this._id}}" type="button">Add to cart</button>
+          </div>
+        </div>
+      </div>
+      {{/each}}
+    </article>
+    <article class="">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          {{#if pag.prevLink}}
+            <li class="page-item"><a class="page-link" href="{{pag.prevLink}}" >Previous</a></li>
+          {{else}}
+           <li class="page-item"><a class="page-link disabled">Previous</a></li>
+           {{/if}}
+          <li class="page-item"><a class="page-link">{{pag.page}}</a></li>
+          {{#if pag.nextLink}}
+            <li class="page-item"><a class="page-link" href="{{pag.nextLink}}" >Next</a></li>
+          {{else}}
+            <li class="page-item"><a class="page-link disabled">Next</a></li>
+           {{/if}}
+        </ul>
+      </nav>
+    </article>
+  </section>
+  {{/if}}
+ 
+<script src="/js/helpers.js"></script>
+<script src="/js/index.js"></script>
+
+<script>
+  const category = '{{query}}'
+  const price = '{{sort}}'
+  function selectedInput(key, filter){
+    const elementList = document.getElementById(key);
+    const listOptions = [...elementList.options];
+    listOptions.forEach((option) => {
+      if(option.value == filter) option.setAttribute('selected',true);
+    });
+  }
+  selectedInput('query',category)
+  selectedInput('sort',price)
+</script>

@@ -1,0 +1,31 @@
+<section class="form-container">
+  <article>
+    <h2>Registro</h2>
+    <form class="shadow-lg p-3 my-3 border rounded user_form" style="min-width: 500px;" id="register">
+      <div class="mb-1">
+        <label for="first_name" class="form-label" >First Name</label>
+        <input type="text" name="first_name" id="first_name" class="form-control" autocomplete="off"  value="test_user_first_name" >
+      </div>
+      <div class="mb-2">
+        <label for="last_name" class="form-label">Last Name</label>
+        <input  type="text" name="last_name" id="last_name" autocomplete="off" class="form-control" value="test_user_last_name" >
+      </div>
+      <div class="mb-2">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" name="email" id="email" autocomplete="off" class="form-control" value="test_user@gmail.com" >
+      </div>
+      <div class="mb-2">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" name="age" id="age" autocomplete="off" min="18" max="100" class="form-control" value="34" >
+      </div>
+      <div class="mb-2">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" name="password" id="password" autocomplete="new-password" class="form-control" value="123456">
+      </div>
+      <button type="submit" class="btn btn-primary">Create Account</button>
+      <p class="m-0 fs-6 fst-italic">Already have an account? <a href="/login">Sign In</a></p>
+    </form>
+  </article>
+</section>
+
+<script src="/js/user.js"></script>
