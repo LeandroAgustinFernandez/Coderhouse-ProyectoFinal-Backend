@@ -75,7 +75,6 @@ export default class CartManagerDB {
   }
 
   async updateProductQuantity(cid, pid, quantity) {
-    console.log({cid, pid, quantity})
     try {
       let result = await cartModel.updateOne(
         { _id: cid, "products.product": pid },

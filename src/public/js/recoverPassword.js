@@ -9,7 +9,6 @@ const sendForm = async (e) => {
     headers: { "Content-type": "application/json; charset=UTF-8" },
   });
   let result = await response.json();
-  console.log(result);
   if (result.status === "success") {
     userform.reset();
     alert(result.payload.message);

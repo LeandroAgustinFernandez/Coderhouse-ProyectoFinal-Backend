@@ -21,7 +21,6 @@ export default class UserManagerDB {
   }
 
   async getById(uid) {
-    console.log(uid)
     try {
       let user = await userModel.findOne({ _id: uid }, { __v: 0 }).lean();
       if (!user) throw new Error(`User not exists.`);

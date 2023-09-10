@@ -67,7 +67,6 @@ export const deleteProduct = async (request, response) => {
     response.status(500).send({ status: "error", payload: res.error });
   } else {
     let owner = await USER_SERVICES.getUserById(product_result.owner);
-    console.log(owner);
     if (owner.role === "premium") {
       await transport.sendMail({
         from: "Leandro Fernandez <micorre@gmail.com>",
@@ -85,7 +84,6 @@ export const deleteProduct = async (request, response) => {
 
 export const updateProduct = async (request, response) => {
   let { pid } = request.params;
-  console.log({ pid, body: request.body });
   let res = await PRODUCT_SERVICES.updateProduct(pid, request.body);
   res?.error
     ? response.status(400).send({ status: "error", payload: res.error })

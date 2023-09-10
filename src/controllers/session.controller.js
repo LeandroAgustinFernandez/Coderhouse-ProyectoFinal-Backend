@@ -140,7 +140,7 @@ export const changeRole = async (request, response) => {
     }
   }
   let result = await USER_SERVICES.changeRole(uid);
-  response.send({ status: "success", payload: result });
+  response.send({ status: "success", payload: { message: 'The role was successfully modified.', result} });
 };
 
 export const uploadDocuments = async (request, response) => {

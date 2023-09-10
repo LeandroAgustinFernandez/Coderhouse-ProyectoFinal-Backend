@@ -16,7 +16,8 @@ import {
   registerView,
   resetPasswordView,
   recoverPassword,
-  purchaseView
+  purchaseView,
+  usersView
 } from "../controllers/view.controller.js";
 
 class ViewRouterClass extends RouterClass {
@@ -34,6 +35,7 @@ class ViewRouterClass extends RouterClass {
     this.get("/logout", passportCall("jwt"), logoutView);
     this.get("/chat", passportCall("jwt"), authorizationRole(["user","premium"]), chatView);
     this.get("/purchase/:code", passportCall("jwt"), authorizationRole(["user","premium"]), purchaseView);
+    this.get("/users", passportCall("jwt"), authorizationRole(["admin"]), usersView);
   }
 }
 

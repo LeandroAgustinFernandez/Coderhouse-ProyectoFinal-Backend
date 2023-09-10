@@ -33,7 +33,6 @@
                   href="/newproduct"
                 >New Product</a>
               </li>
-
             {{else}}
               <li class="nav-item">
                 <a
@@ -42,9 +41,16 @@
                   href="/chat"
                 >Chat</a>
               </li>
-
             {{/if}}
-            
+            {{#if admin}}
+              <li class="nav-item">
+                <a
+                  class="nav-link active"
+                  aria-current="page"
+                  href="/users"
+                >Users</a>
+              </li>
+            {{/if}}
           {{else}}
             <li class="nav-item">
               <a

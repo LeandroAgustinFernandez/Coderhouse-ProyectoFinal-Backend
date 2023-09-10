@@ -1,4 +1,10 @@
-import { PRODUCT_SERVICES, CART_SERVICES, USER_SERVICES, TICKET_SERVICES } from "../services/servicesManager.js";
+import { response } from "express";
+import {
+  PRODUCT_SERVICES,
+  CART_SERVICES,
+  USER_SERVICES,
+  TICKET_SERVICES,
+} from "../services/servicesManager.js";
 
 export const loginView = async (request, response) => {
   response.render("user/login", {
@@ -9,18 +15,18 @@ export const loginView = async (request, response) => {
 };
 
 export const resetPasswordView = async (request, response) => {
-  let { idurl } = request.params
+  let { idurl } = request.params;
   let result = await USER_SERVICES.checkResetUrl(idurl);
-  if(!result?.email) {
-    response.redirect("/recoverpassword")
+  if (!result?.email) {
+    response.redirect("/recoverpassword");
     return;
   }
   let create = new Date(result.recover_password.createTime);
   let now = new Date();
-  let minutes = (now.getTime()-create.getTime()) / 1000 / 60;
-  if(minutes > 60) {
-    await USER_SERVICES.resetRecoverPassword(result.email)
-    response.redirect("/login")
+  let minutes = (now.getTime() - create.getTime()) / 1000 / 60;
+  if (minutes > 60) {
+    await USER_SERVICES.resetRecoverPassword(result.email);
+    response.redirect("/login");
     return;
   }
   response.render("user/resetpassword", {
@@ -28,7 +34,7 @@ export const resetPasswordView = async (request, response) => {
     style: "home",
     logued: false,
     email: result.email,
-    idurl: result.recover_password.id_url
+    idurl: result.recover_password.id_url,
   });
 };
 
@@ -55,7 +61,8 @@ export const perfilView = async (request, response) => {
     title: "Registro",
     style: "home",
     user,
-    role: user.role === 'admin' || user.role === 'premium',
+    admin: user.role === "admin",
+    role: user.role === "admin" || user.role === "premium",
     logued: true,
   });
 };
@@ -84,7 +91,8 @@ export const productsView = async (request, response) => {
     sort,
     query,
     user,
-    role: user.role === 'admin' || user.role === 'premium',
+    admin: user.role === "admin",
+    role: user.role === "admin" || user.role === "premium",
     cart: user.cart,
     logued: true,
   });
@@ -102,7 +110,8 @@ export const productDetailView = async (request, response) => {
     title: `Product ${product.title}`,
     style: "home",
     logued: true,
-    role: user.role === 'admin' || user.role === 'premium',
+    admin: user.role === "admin",
+    role: user.role === "admin" || user.role === "premium",
     cart: user.cart,
   });
 };
@@ -114,7 +123,8 @@ export const newProductView = async (request, response) => {
     title: "Products",
     style: "home",
     logued: true,
-    role: user.role === 'admin' || user.role === 'premium',
+    admin: user.role === "admin",
+    role: user.role === "admin" || user.role === "premium",
   });
 };
 
@@ -135,22 +145,53 @@ export const cartView = async (request, response) => {
 
 export const logoutView = async (request, response) => {
   const { user } = request.user;
-  await USER_SERVICES.setLastConnection(user._id)
+  await USER_SERVICES.setLastConnection(user._id);
   response.clearCookie("tokenBE").redirect("/login");
 };
 
 export const chatView = async (request, response) => {
   const { user } = request.user;
-  response.render("chat", { title: "Chat",style: "styles", logued: true, user });
+  response.render("chat", {
+    title: "Chat",
+    style: "styles",
+    logued: true,
+    user,
+  });
 };
 
 export const purchaseView = async (request, response) => {
   const { user } = request.user;
-  let { code } = request.params
-  console.log(code)
+  let { code } = request.params;
   let ticket = await TICKET_SERVICES.getTicket(code);
-  if(ticket?.error) {
-    return response.render("purchase", { title: "purchase",style: "styles", logued: true, user, ticket_error: true})    
-  };
-  response.render("purchase", { title: "purchase",style: "styles", logued: true, user, ticket_error: false, ticket });
-}
+  if (ticket?.error) {
+    return response.render("purchase", {
+      title: "purchase",
+      style: "styles",
+      logued: true,
+      user,
+      ticket_error: true,
+    });
+  }
+  response.render("purchase", {
+    title: "purchase",
+    style: "styles",
+    logued: true,
+    user,
+    ticket_error: false,
+    ticket,
+  });
+};
+
+export const usersView = async (request, response) => {
+  const { user } = request.user;
+  let users = await USER_SERVICES.getAll();
+  response.render("users", {
+    title: "users",
+    style: "styles",
+    logued: true,
+    user,
+    users,
+    admin: user.role === "admin",
+    role: user.role === "admin" || user.role === "premium",
+  });
+};

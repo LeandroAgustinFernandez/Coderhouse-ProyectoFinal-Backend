@@ -26,7 +26,6 @@ products.addEventListener("click", async (e) => {
 close_action.addEventListener("click", async () => {
   let response = await fetch(`/api/carts/${cart_id.dataset.id}/purchase` , { method: "POST" });
   let result = await response.json();
-  console.log(result.payload.res);
   if (result.status === "success") {
     alert(result.payload.message);
     setTimeout(() => window.location.href = `/purchase/${result.payload.ticket_response.code}`, 500);
